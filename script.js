@@ -2,6 +2,9 @@
 const STARTING_LINK = "https://api.coingecko.com/api/v3";
 let connection;
 let seconds;
+let ids = {
+
+}
 
 $(document).ready(function () {
     testConnection();
@@ -21,6 +24,12 @@ function getCoin(id) {
     });
 }
 
+function getCoins(ids) {
+    for (id in ids) {
+        getCoin(id);
+    }
+}
+
 let tableExists = false;
 function appendData(data) {
     var addAfter = $("#appendAfter");
@@ -31,7 +40,9 @@ function appendData(data) {
 
 var interval = window.setInterval(function () {
     seconds =+ 10;
-    
+    if (connection) {
+        
+    }
 });
 
 
@@ -45,7 +56,7 @@ function testConnection() {
             connection = true;
         },
         error: function (data, status) {
-            $("#connTestPlace").html("Status : API doesnt work !");
+            $("#connTestPlace").html("Status : - API doesnt work !");
             console.log("error");
             console.log(data + " " + status);
         }
