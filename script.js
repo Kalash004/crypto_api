@@ -1,4 +1,15 @@
 
+
+/**Vytvořte webovou stránku a vložte do ni JS knihovnu jQuery a CSS knihovnu Bootstrap.
+Data a popis API pro kryptoměny najděte zde. V
+Použijte jQuey ajax funkci na ověřování statusu serveru. V
+V případě, že server není dostupný, nagenerujte uživatelsky příjemný Error message a tlačítko na opakovaní requestu. X
+V případě, že server je dostupný, vytvořte hezkou tabulku připravenou na zobrazovaní dat. V
+Veškeré DOM manipulace provádějte prostřednictvím jQuery selektorů. V
+Načtěte ceny pro vybrané kryptoměny a zobrazte výsledky do tabulky. V
+Ceny se musejí aktualizovat jednou za 10 vteřin, přičemž doba poslední aktualizace taky musí být uvedena v tabulce. V
+Pro každou kryptoměnu nagenerujte tlačítko umožňující uživatelovi provést aktualizaci (server request) manuálně, přičemž počet manuálních aktualizací za minutu musí být omezen. ? */
+
 const STARTING_LINK = "https://api.coingecko.com/api/v3";
 const COINS = "/coins";
 const PING = "/ping"
@@ -44,7 +55,7 @@ $(document).ready(function () {
 function getCoin(id) {
     console.log("called coins");
     let data_storage;
-     $.ajax({
+    $.ajax({
         url: STARTING_LINK + COINS + "/" + id,
         type: "GET",
         success: function (data, status) {
@@ -76,7 +87,7 @@ function getCoins(ids) {
     ids.forEach(element => {
         getCoin(element);
     });
-    
+
     var tbody = document.createElement("tbody");
     $("#dataTable").append(tbody);
     // sortTable();
@@ -119,7 +130,7 @@ function createTable() {
     nameTh.setAttribute("scope", "col");
     priceUsdTh.setAttribute("scope", "col");
     timestampTh.setAttribute("scope", "col");
-    tbody.setAttribute("id","table-body");
+    tbody.setAttribute("id", "table-body");
     tr.appendChild(empty)
     tr.appendChild(nameTh);
     tr.appendChild(priceUsdTh);
@@ -195,7 +206,7 @@ function testConnectionBtn() {
             console.log(data + " " + status);
         }
     });
-} 
+}
 
 function testConnection() {
     $.ajax({
