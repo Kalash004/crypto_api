@@ -73,15 +73,11 @@ function getCoin(id) {
 
 function getCoins(ids) {
     resetTable();
-    let data = [];
     ids.forEach(element => {
-        data.push(getCoin(element));
+        getCoin(element);
     });
     
     var tbody = document.createElement("tbody");
-    data.forEach(element => {
-        tbody.appendChild(appendData(element));
-    })
     $("#dataTable").append(tbody);
     // sortTable();
 }
@@ -182,12 +178,31 @@ var counter_interval = window.setInterval(function () {
     updateTime();
 }, 1000);
 
+function testConnectionBtn() {
+    $.ajax({
+        url: STARTING_LINK + PING,
+        type: "GET",
+        success: function (data, status) {
+            alert("API works !")
+            console.log(data);
+            connection = true;
+        },
+        error: function (data, status) {
+            connection = false;
+            alertApiNotWorking();
+            $("#connTestPlace").html("Status : - API doesnt work !");
+            console.log("error");
+            console.log(data + " " + status);
+        }
+    });
+} 
+
 function testConnection() {
     $.ajax({
         url: STARTING_LINK + PING,
         type: "GET",
         success: function (data, status) {
-            $("#connTestPlace").html("Status : " + data.gecko_says + " - API works !");
+            $("#connTestPlace").html("Status : " + data.gecko_says + " API works !");
             console.log(data);
             connection = true;
         },

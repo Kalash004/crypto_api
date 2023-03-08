@@ -15,22 +15,20 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand btn bg-success-subtle" href="#">Crypto Checker</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <button onclick="testConnection()" id="connTest">Test Connection</button>
-                    <button id="getCoins">Lets see the table</button>
+                    <button class="btn bg-success-subtle" onclick="testConnectionBtn()" id="connTest">Test Connection</button>
+                    <button class="btn bg-success-subtle" id="getCoins">Let`s see the table</button>
                 </div>
             </div>
-            <form class="d-flex" role="search">
+            <div class="d-flex" role="search">
                 <div class="container bg-success-subtle" id="connTestPlace"></div>
-                <input class="form-control me-2 disabled" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success disabled" type="submit">Search</button>
-            </form>
+            </div>
         </div>
     </nav>
 
