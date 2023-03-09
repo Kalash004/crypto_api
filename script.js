@@ -17,10 +17,9 @@ const PING = "/ping"
 let data_collection_started = false;
 let whenLastClickedActualization = null;
 let connection;
-let startSeconds;
 let seconds;
 const WAIT_SECONDS_MANUAL_RESTART = 5;
-const DATA_UPDATE_SECONDS = 15;
+const DATA_UPDATE_MILI_SECONDS = 15000;
 
 let ids = [
     "01coin",
@@ -45,8 +44,6 @@ $(document).ready(function () {
             }
         }
         whenLastClickedActualization = Date.now();
-        startSeconds = Date.now();
-        seconds = 0;
         data_collection_started = true;
         getCoins(ids)
     }
@@ -107,8 +104,10 @@ function appendData(data) {
     var button = document.createElement("button");
     timeStamp.value = 0;
     tr.id = data.id;
-    button.name = "Refresh this";
+    button.innerHTML = "Refresh this";
     button.value = data.id;
+    button.className = "btn bg-success-subtle";
+    button.onclick = function () {updateOneCoin(button.value)};
     empty.innerHTML = "";
     name.innerHTML = data.name;
     usdPrice.innerHTML = data.market_data.current_price.usd;
@@ -128,7 +127,10 @@ function updateTableOneCoin(data) { // seconds
     table = document.getElementById("dataTable");
     row = document.getElementById(data.id);
     price = row.getElementsByTagName("TD")[1];
-    price.innerHTML = data.current_price.usd
+    price.innerHTML = data.market_data.current_price.usd;
+    time = row.getElementsByTagName("TD")[2];
+    time.value = 0;
+    time.innerHTML = time.value;
 }
 
 function updateOneCoin(id) {
@@ -190,6 +192,7 @@ function resetTable() {
 function updateTime() {
     var table, rows, i, x;
     table = document.getElementById("dataTable");
+    if (table == null) return;
     rows = table.rows;
     for (i = 1; i < (rows.length); i++) {
         x = rows[i].getElementsByTagName("TD")[2];
@@ -201,7 +204,6 @@ function updateTable() {
     resetTable();
     getCoins(ids);
     // sortTable();
-    startSeconds = Date.now();
 }
 
 var update_interval = window.setInterval(function () {
@@ -211,17 +213,14 @@ var update_interval = window.setInterval(function () {
     if (!data_collection_started) {
         return;
     }
-    startSeconds = Date.now();
-    seconds = 0;
     updateTable();
-}, DATA_UPDATE_SECONDS);
+}, DATA_UPDATE_MILI_SECONDS);
 
 var test_interval = window.setInterval(function () {
     testConnection();
 }, 60000)
 
 var counter_interval = window.setInterval(function () {
-    console.log("test");
     addSeconds();
     updateTime();
 }, 1000);
@@ -229,6 +228,7 @@ var counter_interval = window.setInterval(function () {
 function addSeconds() {
     var table, rows, i, x;
     table = document.getElementById("dataTable");
+    if (table == null) return;
     rows = table.rows;
     for (i = 1; i < (rows.length); i++) {
         x = rows[i].getElementsByTagName("TD")[2];
