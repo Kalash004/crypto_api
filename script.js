@@ -106,6 +106,7 @@ function appendData(data) {
     var buttonHolder = document.createElement("td");
     var button = document.createElement("button");
     timeStamp.value = 0;
+    tr.id = data.id;
     button.name = "Refresh this";
     button.value = data.id;
     empty.innerHTML = "";
@@ -123,17 +124,11 @@ function appendData(data) {
 }
 
 function updateTableOneCoin(data) { // seconds
-    var table, rows, i, x;
+    var table, row;
     table = document.getElementById("dataTable");
-    rows = table.rows;
-    for (i = 1; i < (rows.length); i++) {
-        x = rows[i].getElementsByTagName("TD")[0];
-        if (x.innerHTML == data.id) {
-            price = rows[i].getElementsByTagName("TD")[1];
-            price.innerHTML = data.current_price.usd
-            return;
-        }
-    }
+    row = document.getElementById(data.id);
+    price = row.getElementsByTagName("TD")[1];
+    price.innerHTML = data.current_price.usd
 }
 
 function updateOneCoin(id) {
@@ -198,7 +193,7 @@ function updateTime() {
     rows = table.rows;
     for (i = 1; i < (rows.length); i++) {
         x = rows[i].getElementsByTagName("TD")[2];
-        x.innerHTML = seconds + "s";
+        x.innerHTML = x.value + "s";
     }
 }
 
@@ -230,6 +225,16 @@ var counter_interval = window.setInterval(function () {
     addSeconds();
     updateTime();
 }, 1000);
+
+function addSeconds() {
+    var table, rows, i, x;
+    table = document.getElementById("dataTable");
+    rows = table.rows;
+    for (i = 1; i < (rows.length); i++) {
+        x = rows[i].getElementsByTagName("TD")[2];
+        x.value = x.value + 1;
+    }
+}
 
 function testConnectionBtn() {
     $.ajax({
