@@ -57,11 +57,9 @@ function getCoin(id) {
             url: STARTING_LINK + COINS + "/" + id,
             type: "GET",
             success: function (data, status) {
-                console.log(data);
                 appendData(data);
             },
             error: function (data, status) {
-                console.log("Unable to append data");
                 connection = false;
             }
         });
@@ -130,7 +128,7 @@ function updateTableOneCoin(data) { // seconds
     price.innerHTML = data.market_data.current_price.usd;
     time = row.getElementsByTagName("TD")[2];
     time.value = 0;
-    time.innerHTML = time.value;
+    time.innerHTML = time.value + "s";
 }
 
 function updateOneCoin(id) {
@@ -138,11 +136,10 @@ function updateOneCoin(id) {
         url: STARTING_LINK + COINS + "/" + id,
         type: "GET",
         success: function (data, status) {
-            console.log(data);
             updateTableOneCoin(data)
         },
         error: function (data, status) {
-            console.log("Unable to append data");
+            alertApiNotWorking(data,status);
         }
     });
 }
@@ -242,15 +239,12 @@ function testConnectionBtn() {
         type: "GET",
         success: function (data, status) {
             alert("API works !")
-            console.log(data);
             connection = true;
         },
         error: function (data, status) {
             connection = false;
             alertApiNotWorking();
             $("#connTestPlace").html("Status : - API doesnt work !");
-            console.log("error");
-            console.log(data + " " + status);
         }
     });
 }
@@ -261,15 +255,12 @@ function testConnection() {
         type: "GET",
         success: function (data, status) {
             $("#connTestPlace").html("Status : " + data.gecko_says + " API works !");
-            console.log(data);
             connection = true;
         },
         error: function (data, status) {
             connection = false;
             alertApiNotWorking();
             $("#connTestPlace").html("Status : - API doesnt work !");
-            console.log("error");
-            console.log(data + " " + status);
         }
     });
 }
